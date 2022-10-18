@@ -1,0 +1,13 @@
+{
+  "name": "cosmos-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@cosmjs/stargate": "^0.29.1",
+    "protobufjs": "^6.11.3"
+  }
+}
