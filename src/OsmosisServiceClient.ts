@@ -30,32 +30,43 @@ export default class OsmosisServiceClient {
   };
 
   getBlockHeight = async (): Promise<number | undefined> => {
-    const { block } = await this.baseQueryServiceClient.GetLatestBlock({});
-
-    return block?.header?.height.low;
+    try {
+      const { block } = await this.baseQueryServiceClient.GetLatestBlock({});
+      return block?.header?.height.low;
+    } catch (e) {
+      console.error("Error fetching block height!", e);
+    }
   };
 
   getBlockHash = async (): Promise<string | undefined> => {
-    const { blockId } = await this.baseQueryServiceClient.GetLatestBlock({});
-    if (blockId === undefined) {
-      return;
-    }
+    try {
+      const { blockId } = await this.baseQueryServiceClient.GetLatestBlock({});
+      if (blockId === undefined) {
+        return;
+      }
 
-    let hash: string = "";
-    blockId?.hash.forEach((h) => {
-      hash = hash + h.toString(16).toUpperCase();
-    });
-    return hash;
+      let hash: string = "";
+      blockId?.hash.forEach((h) => {
+        hash = hash + h.toString(16).toUpperCase();
+      });
+      return hash;
+    } catch (e) {
+      console.error("Error fetching block hash!", e);
+    }
   };
 
-  getNumPools = async (): Promise<number> => {
-    const request = QueryNumPoolsRequest.encode({}).finish();
-    const response = await this.rpcClient.request(
-      "osmosis.gamm.v1beta1.Query",
-      "NumPools",
-      request
-    );
-    return QueryNumPoolsResponse.decode(new minimal.Reader(response)).numPools
-      .low;
+  getNumPools = async (): Promise<number | undefined> => {
+    try {
+      const request = QueryNumPoolsRequest.encode({}).finish();
+      const response = await this.rpcClient.request(
+        "osmosis.gamm.v1beta1.Query",
+        "NumPools",
+        request
+      );
+      return QueryNumPoolsResponse.decode(new minimal.Reader(response)).numPools
+        .low;
+    } catch (e) {
+      console.error("Error fetching num pools!", e);
+    }
   };
 }

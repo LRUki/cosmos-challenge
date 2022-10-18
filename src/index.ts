@@ -8,12 +8,12 @@ const main = async () => {
 
     if (height != undefined && height % 10 == 0 && height != prevHeight) {
       console.log(
-        `======================= BLOCK HEIGHT ${height} =======================`
+        `======================= Block height ${height} =======================`
       );
-      console.log(await client.getBlockHash(), "BLOCKHASH");
-      console.log(await client.getNumPools(), "NUM POOLS");
+      console.log("Block hash: ", await client.getBlockHash());
+      console.log("Number of pools: ", await client.getNumPools());
       console.log(
-        `check https://www.mintscan.io/osmosis/blocks/${height} for more details`
+        `Check "https://www.mintscan.io/osmosis/blocks/${height}" for more details.`
       );
       prevHeight = height;
     }
